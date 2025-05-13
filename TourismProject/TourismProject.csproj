@@ -319,6 +319,10 @@
     <Compile Include="Migrations\202505060438035_RevertTourDateChanges.Designer.cs">
       <DependentUpon>202505060438035_RevertTourDateChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202505130955134_RemoveAvailableDate.cs" />
+    <Compile Include="Migrations\202505130955134_RemoveAvailableDate.Designer.cs">
+      <DependentUpon>202505130955134_RemoveAvailableDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Agency.cs" />
@@ -480,6 +484,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202505060438035_RevertTourDateChanges.resx">
       <DependentUpon>202505060438035_RevertTourDateChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505130955134_RemoveAvailableDate.resx">
+      <DependentUpon>202505130955134_RemoveAvailableDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

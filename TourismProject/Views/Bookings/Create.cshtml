@@ -15,16 +15,29 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <!-- TourPackageId Dropdown -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.TourPackageId, "Tour Package", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TourPackageId, (SelectList)ViewBag.TourPackageId, "-- Select a Tour Package --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TourPackageId, "", new { @class = "text-danger" })
+        <!-- TourPackage Selection -->
+        @if (ViewBag.PackageTitle != null)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">Tour Package</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" value="@ViewBag.PackageTitle" readonly />
+                    @Html.HiddenFor(model => model.TourPackageId)
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.TourPackageId, "Tour Package", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TourPackageId, (SelectList)ViewBag.TourPackageId, "-- Select a Tour Package --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TourPackageId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
 
-        <!-- BookingDate Input -->
+        <!-- Booking Date -->
         <div class="form-group">
             @Html.LabelFor(model => model.BookingDate, "Booking Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,7 +46,7 @@
             </div>
         </div>
 
-        <!-- PaymentCompleted Checkbox -->
+        <!-- Payment Completed -->
         <div class="form-group">
             @Html.LabelFor(model => model.PaymentCompleted, "Payment Completed", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

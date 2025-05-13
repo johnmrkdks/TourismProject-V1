@@ -25,11 +25,11 @@
                         <li class="list-group-item"><strong>Duration:</strong> @item.DurationInDays days</li>
                         <li class="list-group-item"><strong>Price:</strong> $@item.Price</li>
                         <li class="list-group-item"><strong>Group Size:</strong> @item.MaxGroupSize</li>
-                        <li class="list-group-item"><strong>Available:</strong> @item.AvailableDate.ToShortDateString()</li>
                     </ul>
                 </div>
                 <div class="card-footer bg-white">
                     @Html.ActionLink("Details", "Details", new { id = item.TourPackageId }, new { @class = "btn btn-outline-info btn-sm" })
+
 
                     @if (User.IsInRole("Agency"))
                     {
@@ -37,6 +37,11 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.TourPackageId }, new { @class = "btn btn-outline-secondary btn-sm" })
                         @Html.Raw(" ")
                         @Html.ActionLink("Delete", "Delete", new { id = item.TourPackageId }, new { @class = "btn btn-outline-danger btn-sm" })
+                    }
+                    @if (User.IsInRole("Tourist"))
+                    {
+                        @Html.Raw(" ")
+                        @Html.ActionLink("Book", "Create", "Bookings", new { id = item.TourPackageId }, new { @class = "btn btn-outline-info btn-sm" })
                     }
                 </div>
             </div>

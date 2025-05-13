@@ -25,9 +25,6 @@ namespace TourismProject.Models
 
         public int MaxGroupSize { get; set; }
 
-        [Required]
-        public DateTime AvailableDate { get; set; }
-
         public string ImageUrl { get; set; }
 
         public virtual Agency Agency { get; set; }
