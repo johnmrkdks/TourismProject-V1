@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch with IIS Express",
+            "type": "clr",
+            "request": "launch",
+            "program": "C:\\Program Files\\IIS Express\\iisexpress.exe",
+            "args": [
+                "/path:${workspaceFolder}",
+                "/port:5000"
+            ],
+            "preLaunchTask": "build",
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "Now listening on: (https?://\\S+)",
+                "uriFormat": "%s"
+            }
+        }
+    ]
+}

@@ -1,0 +1,95 @@
+﻿@model TourismProject.Models.AgencyDashboardViewModel
+
+@{
+    ViewBag.Title = "Agency Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Update if needed
+}
+
+<h2 class="mb-4">Agency Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card p-3 shadow rounded">
+            <h5>Total Bookings Overview</h5>
+            <canvas id="totalBookingsChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card p-3 shadow rounded">
+            <h5>Booking Status Breakdown</h5>
+            <canvas id="bookingStatusChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card p-3 shadow rounded">
+            <h5>Total Tourists</h5>
+            <p class="fs-4">@Model.TotalTourists</p>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card p-3 shadow rounded">
+            <h5>Most Popular Tour Package</h5>
+            <p class="fs-4">@Model.MostPopularTourPackage</p>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Fake data (for demo only). Replace with real data if needed.
+    const bookingDates = ["Mar 12", "Mar 13", "Mar 14", "Mar 15", "Mar 16", "Mar 17", "Mar 18"];
+    const bookingCounts = [100, 300, 700, 500, 400, 600, @Model.TotalBookings];
+
+    // Line Chart: Total Bookings Over Time
+    new Chart(document.getElementById('totalBookingsChart'), {
+        type: 'line',
+        data: {
+            labels: bookingDates,
+            datasets: [{
+                label: 'Total Bookings',
+                data: bookingCounts,
+                borderColor: '#007bff',
+                backgroundColor: 'rgba(0,123,255,0.1)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            },
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+
+    // Bar Chart: Booking Status
+    new Chart(document.getElementById('bookingStatusChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Completed', 'Pending'],
+            datasets: [{
+                label: 'Bookings',
+                data: [@Model.CompletedBookings, @Model.PendingBookings],
+                backgroundColor: ['#28a745', '#ffc107']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+</script>

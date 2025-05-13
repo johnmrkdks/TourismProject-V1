@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff; /* White background for the page */
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .contact-container {
+            width: 70%; /* Wider container */
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff; /* White background for the card */
+            border-radius: 10px; /* Rounded corners for the card */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Increased shadow for better visibility */
+        }
+
+            .contact-container h2 {
+                color: #3366ff;
+                margin-bottom: 20px;
+            }
+
+            .contact-container p {
+                font-size: 1.1rem;
+                color: #555;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+        .form-group {
+            margin-top: 15px;
+        }
+
+            .form-group label {
+                font-size: 1rem;
+                color: #3366ff;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                outline: none;
+                font-size: 1rem;
+                margin-top: 5px;
+            }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #3366ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            .btn-submit:hover {
+                background-color: #2a56d6;
+            }
+
+        .footer-link {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+            .footer-link p {
+                margin: 5px 0;
+                color: #555;
+            }
+
+            .footer-link a {
+                color: #3366ff;
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, we’re here to help!</p>
+
+        <form>
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name" />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" />
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" rows="4" placeholder="Type your message here..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+
+        <div class="footer-link">
+            <p>Or reach us at:</p>
+            <p>Email: <strong>support@tourismplatform.com</strong></p>
+            <p>Phone: <strong>+61 123 456 789</strong></p>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

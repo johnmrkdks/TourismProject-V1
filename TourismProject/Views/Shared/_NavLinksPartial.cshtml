@@ -1,0 +1,74 @@
+<head>
+    <style>
+        /* Style for the navigation links */
+        .nav-link {
+            transition: all 0.3s ease; /* Smooth transition for all changes */
+            text-decoration: none; /* Remove underline */
+        }
+
+            /* Hover effect for navigation items */
+            .nav-link:hover {
+                color: #f39c12; /* Change color to a gold/yellow shade */
+                text-decoration: none; /* Ensure no underline on hover */
+            }
+
+        /* Optional: Add a background color change on hover */
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Light background color change */
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+</head>
+
+<ul class="navbar-nav flex-grow-2">
+    <li class="nav-item d-inline-flex align-items-center text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house">
+            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+            <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        </svg>
+        @if (User.IsInRole("Tourist"))
+        {
+            @Html.ActionLink("Tour Packages", "Index", "TourPackages", null, new { @class = "nav-link text-white" })
+        }
+        else
+        {
+            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link text-white" })
+        }
+    </li>
+
+    @if (Request.IsAuthenticated)
+    {
+        if (User.IsInRole("Tourist"))
+        {
+            <li class="nav-item text-white">@Html.ActionLink("My Bookings", "Index", "Bookings", null, new { @class = "nav-link text-white" })</li>
+            <li class="nav-item text-white">@Html.ActionLink("Feedback", "Create", "Feedbacks", null, new { @class = "nav-link text-white" })</li>
+        }
+        else if (User.IsInRole("Agency"))
+        {
+            <li class="nav-item text-white">@Html.ActionLink("Dashboard", "Dashboard", "Agencies", null, new { @class = "nav-link text-white" })</li>
+            <li class="nav-item text-white">@Html.ActionLink("Packages", "Index", "TourPackages", null, new { @class = "nav-link text-white" })</li>
+            <li class="nav-item text-white">@Html.ActionLink("Manage Bookings", "Index", "Bookings", null, new { @class = "nav-link text-white" })</li>
+            <li class="nav-item text-white">@Html.ActionLink("Feedback", "Index", "Feedbacks", null, new { @class = "nav-link text-white" })</li>
+        }
+    }
+
+    <!-- Links that should appear only on the landing page, but not for authenticated users -->
+    @if (!Request.IsAuthenticated)
+    {
+        <li class="nav-item d-inline-flex align-items-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+            </svg>
+            @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link text-white" })
+        </li>
+        <li class="nav-item d-inline-flex align-items-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail">
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link text-white" })
+        </li>
+    }
+</ul>

@@ -1,0 +1,114 @@
+﻿@model IEnumerable<TourismProject.Models.Booking>
+
+@{
+    ViewBag.Title = "Manage Bookings";
+}
+
+<h2>Manage Bookings</h2>
+
+<!-- Minimal 'Create New' Button -->
+<div class="create-link">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn-create" })
+</div>
+
+<!-- Minimal Bookings Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Title</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Payment Completed</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Tourist.FullName</td>
+                <td>@item.TourPackage.Title</td>
+                <td>@item.BookingDate.ToString("MM/dd/yyyy")</td>
+                <td>@item.Status</td>
+                <td>@(item.PaymentCompleted ? "Yes" : "No")</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.BookingId }, new { @class = "btn-link" })
+
+                    @if (User.IsInRole("Agency"))
+                    {
+                        @: |
+                        @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }, new { @class = "btn-link" })
+                        @: |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.BookingId }, new { @class = "btn-link text-danger" })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Styles for the Booking Table and Create Button -->
+<style>
+    .table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .table th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table .btn-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .table .btn-link:hover {
+                text-decoration: underline;
+            }
+
+            .table .btn-link.text-danger {
+                color: #dc3545;
+            }
+
+                .table .btn-link.text-danger:hover {
+                    color: #c82333;
+                }
+
+    /* Styling for 'Create New' minimal button */
+    .create-link {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .btn-create {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+        border: none;
+    }
+
+        .btn-create:hover {
+            background-color: #0056b3;
+        }
+</style>

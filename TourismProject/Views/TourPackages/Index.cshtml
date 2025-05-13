@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TourismProject.Models.TourPackage>
+@{
+    ViewBag.Title = "Tour Packages";
+}
+
+<h2 class="mb-4">Explore Tour Packages</h2>
+
+@if (User.IsInRole("Agency"))
+{
+    <p>
+        @Html.ActionLink("Create New Package", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;" />
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">@item.Description</p>
+                    <ul class="list-group list-group-flush mb-2">
+                        <li class="list-group-item"><strong>Duration:</strong> @item.DurationInDays days</li>
+                        <li class="list-group-item"><strong>Price:</strong> $@item.Price</li>
+                        <li class="list-group-item"><strong>Group Size:</strong> @item.MaxGroupSize</li>
+                        <li class="list-group-item"><strong>Available:</strong> @item.AvailableDate.ToShortDateString()</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white">
+                    @Html.ActionLink("Details", "Details", new { id = item.TourPackageId }, new { @class = "btn btn-outline-info btn-sm" })
+
+                    @if (User.IsInRole("Agency"))
+                    {
+                        @Html.Raw(" ")
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TourPackageId }, new { @class = "btn btn-outline-secondary btn-sm" })
+                        @Html.Raw(" ")
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TourPackageId }, new { @class = "btn btn-outline-danger btn-sm" })
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

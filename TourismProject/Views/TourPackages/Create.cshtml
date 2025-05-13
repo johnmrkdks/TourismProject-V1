@@ -1,0 +1,134 @@
+﻿@model TourismProject.Models.TourPackage
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Tour Package</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <style>
+        /* Minimal form control style */
+        .minimal-form-control {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        /* Form container styles */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button styles */
+        .minimal-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .minimal-button:hover {
+                background-color: #0056b3;
+            }
+
+        /* Form label styling */
+        .form-label {
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Validation message styling */
+        .text-danger {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+
+        /* Back to List link */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .back-link:hover {
+                text-decoration: underline;
+            }
+    </style>
+
+    <div class="form-container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AgencyId, "Select Agency", htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("AgencyId", null, htmlAttributes: new { @class = "form-control minimal-form-control" })
+            @Html.ValidationMessageFor(model => model.AgencyId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control minimal-form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control minimal-form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DurationInDays, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.DurationInDays, new { htmlAttributes = new { @class = "form-control minimal-form-control" } })
+            @Html.ValidationMessageFor(model => model.DurationInDays, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control minimal-form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxGroupSize, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.MaxGroupSize, new { htmlAttributes = new { @class = "form-control minimal-form-control" } })
+            @Html.ValidationMessageFor(model => model.MaxGroupSize, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control minimal-form-control" } })
+            @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="form-actions">
+                <input type="submit" value="Create" class="btn btn-primary minimal-button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { @class = "back-link" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

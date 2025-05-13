@@ -1,0 +1,150 @@
+﻿@model TourismProject.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #e8e8e8;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .form-container {
+            max-width: 400px; /* Increased the width */
+            margin: 50px auto;
+            padding: 25px 30px; /* Adjusted padding for better spacing */
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+            .form-container h2 {
+                color: #3366ff;
+                margin-bottom: 10px;
+            }
+
+            .form-container p {
+                font-size: 0.9rem;
+                color: #555;
+            }
+
+        .form-group {
+            margin-top: 15px;
+        }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 12px; /* Increased padding for a bit more space */
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                outline: none;
+                font-size: 0.95rem;
+                margin-top: 5px;
+            }
+
+        .form-check {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+            .form-check input {
+                margin-right: 5px;
+            }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #3366ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            .btn-submit:hover {
+                background-color: #2a56d6;
+            }
+
+        .footer-link {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+            .footer-link a {
+                color: #3366ff;
+                text-decoration: none;
+            }
+
+        .text-danger {
+            font-size: 0.8rem;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create a new account</h2>
+        <p>Welcome! Please enter your details to register.</p>
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullName)
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Full Name" })
+                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.SelectedRole)
+                @Html.DropDownListFor(m => m.SelectedRole, new SelectList(new[]
+                {
+                    new { Value = "Tourist", Text = "Tourist" },
+                    new { Value = "Agency", Text = "Agency" }
+                }, "Value", "Text"), "Select Role", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SelectedRole, "", new { @class = "text-danger" })
+            </div>
+
+            <input type="submit" value="Register" class="btn-submit" />
+        }
+
+        <div class="footer-link">
+            Already have an account? @Html.ActionLink("Login", "Login", "Account")
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

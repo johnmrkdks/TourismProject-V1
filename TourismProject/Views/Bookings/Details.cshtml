@@ -1,0 +1,72 @@
+﻿@model TourismProject.Models.Booking
+
+@{
+    ViewBag.Title = "Booking Details";
+}
+
+<h2>Booking Details</h2>
+
+<div>
+    <h4>Booking Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <!-- Displaying Tourist Full Name, handle potential null case -->
+        <dt>
+            @Html.DisplayNameFor(model => model.Tourist.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tourist.FullName)
+        </dd>
+
+        <!-- Displaying Tourist UserId -->
+        <dt>
+            @Html.DisplayNameFor(model => model.Tourist.UserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tourist.UserId)
+        </dd>
+
+        <!-- Displaying Tour Package Title -->
+        <dt>
+            @Html.DisplayNameFor(model => model.TourPackage.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TourPackage.Title)
+        </dd>
+
+        <!-- Displaying Booking Date -->
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+
+        <!-- Displaying Booking Status -->
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <!-- Displaying Payment Status -->
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentCompleted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PaymentCompleted)
+        </dd>
+    </dl>
+</div>
+
+<!-- Action links -->
+<p>
+    @if (User.IsInRole("Agency"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BookingId })
+        @: |
+    }
+
+    @Html.ActionLink("Back to List", "Index")
+</p>

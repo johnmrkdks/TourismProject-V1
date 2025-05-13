@@ -1,0 +1,93 @@
+﻿@model TourismProject.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Welcome to Our Tourism Platform";
+}
+
+<!-- Hero Section -->
+<div class="hero-section text-center py-5 bg-light mb-4">
+    <div class="container">
+        <h1 class="display-4">Welcome to Our Tourism Platform</h1>
+        <p class="lead">Your gateway to unforgettable travel experiences with trusted agencies and expert tour guides.</p>
+        <a href="@Url.Action("Index", "TourPackages")" class="btn btn-primary">
+            Start Your Journey
+        </a>
+    </div>
+</div>
+
+<!-- Introduction Section -->
+<div class="container mb-5">
+    <h2 class="text-center mb-4">Why Choose Us?</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Trusted Agencies</h5>
+                    <p class="card-text">We partner with the most reliable travel agencies and guides to offer you the best experiences.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Tailored Packages</h5>
+                    <p class="card-text">Explore custom travel packages designed to match your interests and budget.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Expert Recommendations</h5>
+                    <p class="card-text">Get recommendations from seasoned experts to create the perfect itinerary for your travels.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="container mb-5 text-center">
+    <h2 class="mb-4">Ready to Explore?</h2>
+    <p class="lead">Whether you're seeking adventure, relaxation, or culture, we've got the perfect destination for you. Start your journey today!</p>
+    <a href="@Url.Action("Index", "TourPackages")" class="btn btn-primary btn-lg">
+        Find Your Tour
+    </a>
+</div>
+
+<!-- Testimonials Section -->
+<div class="container mb-5">
+    <h2 class="text-center mb-4">What Our Travelers Say</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p class="fs-6">"This platform made booking my vacation seamless! I had the best time with my family, thanks to their amazing tour packages!"</p>
+                    <footer class="blockquote-footer fs-6">Jane Doe, Traveler</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p class="fs-6">"A wonderful experience. The trip was well organized, and I felt supported every step of the way."</p>
+                    <footer class="blockquote-footer fs-6">John Smith, Traveler</footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p class="fs-6">"I loved every moment of my trip! The itinerary was perfectly planned and executed. I highly recommend it!"</p>
+                    <footer class="blockquote-footer fs-6">Sarah Lee, Traveler</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<div class="container text-center mb-5">
+    <p>© 2025 Tourism Platform. All rights reserved.</p>
+</div>
+

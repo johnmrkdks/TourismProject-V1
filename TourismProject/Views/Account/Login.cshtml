@@ -1,0 +1,133 @@
+﻿@model TourismProject.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #e8e8e8;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .form-container {
+            max-width: 360px;
+            margin: 50px auto;
+            padding: 30px 25px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+            .form-container h2 {
+                color: #3366ff;
+                margin-bottom: 10px;
+            }
+
+            .form-container p {
+                font-size: 0.9rem;
+                color: #555;
+            }
+
+        .form-group {
+            margin-top: 15px;
+        }
+
+            .form-group input {
+                width: 100%;
+                padding: 12px;
+                border-radius: 10px;
+                border: 1px solid #ccc;
+                outline: none;
+                font-size: 0.95rem;
+                margin-top: 5px;
+            }
+
+        .form-check {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+            .form-check input {
+                margin-right: 5px;
+            }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #3366ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            .btn-submit:hover {
+                background-color: #2a56d6;
+            }
+
+        .footer-link {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+            .footer-link a {
+                color: #3366ff;
+                text-decoration: none;
+            }
+
+        .text-danger {
+            font-size: 0.8rem;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Login</h2>
+        <p>Welcome back! Please enter your credentials.</p>
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-check">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </div>
+
+            <input type="submit" value="Login" class="btn-submit" />
+        }
+
+        <div class="footer-link">
+            Don’t have an account? @Html.ActionLink("Register", "Register", "Account")
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>
