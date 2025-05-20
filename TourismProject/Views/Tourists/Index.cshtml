@@ -1,45 +1,40 @@
 ﻿@model IEnumerable<TourismProject.Models.Tourist>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "All Tourists";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Make sure you're using your main layout
 }
 
-<h2>Index</h2>
+<h2 class="mb-4">All Tourists</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
+<div class="d-flex justify-content-end mb-3">
+    <a href="@Url.Action("Create", "Tourists")" class="btn btn-primary">Create New</a>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TouristId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TouristId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TouristId })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="card shadow rounded p-3">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().UserId)</th>
+                <th>@Html.DisplayNameFor(model => model.First().FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Tourists", new { id = item.TouristId })" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                        <a href="@Url.Action("Details", "Tourists", new { id = item.TouristId })" class="btn btn-sm btn-outline-secondary me-1">Details</a>
+                        <a href="@Url.Action("Delete", "Tourists", new { id = item.TouristId })" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

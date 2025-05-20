@@ -27,6 +27,7 @@
         <div class="card p-3 shadow rounded">
             <h5>Total Tourists</h5>
             <p class="fs-4">@Model.TotalTourists</p>
+            <a href="@Url.Action("Index", "Tourists")" class="btn btn-primary mt-2">View All Tourists</a>
         </div>
     </div>
     <div class="col-md-6 mb-4">
@@ -42,8 +43,8 @@
 
 <script>
     // Fake data (for demo only). Replace with real data if needed.
-    const bookingDates = ["Mar 12", "Mar 13", "Mar 14", "Mar 15", "Mar 16", "Mar 17", "Mar 18"];
-    const bookingCounts = [100, 300, 700, 500, 400, 600, @Model.TotalBookings];
+    const bookingDates = ["Mar 12", "Mar 13", "Mar 14", "Mar 15", "Mar 16", "Mar 17", "May 20"];
+    const bookingCounts = [15, 20, 20, 40, 6, 11, @Model.TotalBookings];
 
     // Line Chart: Total Bookings Over Time
     new Chart(document.getElementById('totalBookingsChart'), {

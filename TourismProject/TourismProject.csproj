@@ -323,6 +323,10 @@
     <Compile Include="Migrations\202505130955134_RemoveAvailableDate.Designer.cs">
       <DependentUpon>202505130955134_RemoveAvailableDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202505200854318_AddEmailToAgency.cs" />
+    <Compile Include="Migrations\202505200854318_AddEmailToAgency.Designer.cs">
+      <DependentUpon>202505200854318_AddEmailToAgency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Agency.cs" />
@@ -487,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202505130955134_RemoveAvailableDate.resx">
       <DependentUpon>202505130955134_RemoveAvailableDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505200854318_AddEmailToAgency.resx">
+      <DependentUpon>202505200854318_AddEmailToAgency.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

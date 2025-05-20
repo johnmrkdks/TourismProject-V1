@@ -173,22 +173,34 @@ namespace TourismProject.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "Tourist");
+                    await UserManager.AddToRoleAsync(user.Id, model.SelectedRole);
 
-                    // Automatically create Tourist profile
                     using (var db = new ApplicationDbContext())
                     {
-                        var tourist = new Tourist
+                        if (model.SelectedRole == "Tourist")
                         {
-                            UserId = user.Id, // assuming you have UserId foreign key in Tourist model
-                            FullName = model.FullName, // from register viewmodel
-                            Email = model.Email,
-                            // any other defaults you want
-                        };
+                            var tourist = new Tourist
+                            {
+                                UserId = user.Id,
+                                FullName = model.FullName,
+                                Email = model.Email,
+                            };
+                            db.Tourists.Add(tourist);
+                        }
+                        else if (model.SelectedRole == "Agency")
+                        {
+                            var agency = new Agency
+                            {
+                                UserId = user.Id,
+                                AgencyName = model.FullName,
+                                Email = model.Email,
+                            };
+                            db.Agencies.Add(agency);
+                        }
 
-                        db.Tourists.Add(tourist);
                         db.SaveChanges();
                     }
+
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index", "Home");

@@ -6,10 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TourismProject.Models;
 
 namespace TourismProject.Controllers
 {
+    [Authorize]
     public class FeedbacksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,49 +19,88 @@ namespace TourismProject.Controllers
         // GET: Feedbacks
         public ActionResult Index()
         {
-            var feedbacks = db.Feedbacks.Include(f => f.Tourist).Include(f => f.TourPackage);
-            return View(feedbacks.ToList());
+            string userId = User.Identity.GetUserId();
+
+            if (User.IsInRole("Tourist"))
+            {
+                var tourist = db.Tourists.FirstOrDefault(t => t.UserId == userId);
+                if (tourist == null)
+                {
+                    TempData["ErrorMessage"] = "Tourist profile not found.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var feedbacks = db.Feedbacks
+                    .Include(f => f.TourPackage)
+                    .Where(f => f.TouristId == tourist.TouristId)
+                    .ToList();
+
+                return View(feedbacks);
+            }
+            else if (User.IsInRole("Agency"))
+            {
+                // Agencies see all feedbacks
+                var feedbacks = db.Feedbacks
+                    .Include(f => f.TourPackage)
+                    .Include(f => f.Tourist)
+                    .ToList();
+
+                return View(feedbacks);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Access denied. Only registered tourists or agencies can view feedbacks.";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        // GET: Feedbacks/Create
+        public ActionResult Create()
+        {
+            ViewBag.TourPackageId = new SelectList(db.TourPackages, "TourPackageId", "Title");
+            return View();
+        }
+
+        // POST: Feedbacks/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "TourPackageId,Rating,Comment,SubmittedDate")] Feedback feedback)
+        {
+            string userId = User.Identity.GetUserId();
+            var tourist = db.Tourists.FirstOrDefault(t => t.UserId == userId);
+
+            if (tourist == null)
+            {
+                TempData["ErrorMessage"] = "Tourist profile not found.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (ModelState.IsValid)
+            {
+                feedback.TouristId = tourist.TouristId;
+                db.Feedbacks.Add(feedback);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.TourPackageId = new SelectList(db.TourPackages, "TourPackageId", "Title", feedback.TourPackageId);
+            return View(feedback);
         }
 
         // GET: Feedbacks/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Feedback feedback = db.Feedbacks.Find(id);
+
+            Feedback feedback = db.Feedbacks
+                .Include(f => f.TourPackage)
+                .Include(f => f.Tourist)
+                .FirstOrDefault(f => f.FeedbackId == id);
+
             if (feedback == null)
-            {
                 return HttpNotFound();
-            }
-            return View(feedback);
-        }
 
-        // GET: Feedbacks/Create
-        public ActionResult Create()
-        {
-            ViewBag.TouristId = new SelectList(db.Tourists, "TouristId", "UserId");
-            ViewBag.TourPackageId = new SelectList(db.TourPackages, "TourPackageId", "Title");
-            return View();
-        }
-
-        // POST: Feedbacks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FeedbackId,TourPackageId,TouristId,Rating,Comment,SubmittedDate")] Feedback feedback)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Feedbacks.Add(feedback);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.TouristId = new SelectList(db.Tourists, "TouristId", "UserId", feedback.TouristId);
-            ViewBag.TourPackageId = new SelectList(db.TourPackages, "TourPackageId", "Title", feedback.TourPackageId);
             return View(feedback);
         }
 
@@ -67,22 +108,17 @@ namespace TourismProject.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Feedback feedback = db.Feedbacks.Find(id);
             if (feedback == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.TouristId = new SelectList(db.Tourists, "TouristId", "UserId", feedback.TouristId);
+
             ViewBag.TourPackageId = new SelectList(db.TourPackages, "TourPackageId", "Title", feedback.TourPackageId);
             return View(feedback);
         }
 
         // POST: Feedbacks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "FeedbackId,TourPackageId,TouristId,Rating,Comment,SubmittedDate")] Feedback feedback)
@@ -93,7 +129,7 @@ namespace TourismProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TouristId = new SelectList(db.Tourists, "TouristId", "UserId", feedback.TouristId);
+
             ViewBag.TourPackageId = new SelectList(db.TourPackages, "TourPackageId", "Title", feedback.TourPackageId);
             return View(feedback);
         }
@@ -102,14 +138,16 @@ namespace TourismProject.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Feedback feedback = db.Feedbacks.Find(id);
+
+            Feedback feedback = db.Feedbacks
+                .Include(f => f.TourPackage)
+                .Include(f => f.Tourist)
+                .FirstOrDefault(f => f.FeedbackId == id);
+
             if (feedback == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(feedback);
         }
 

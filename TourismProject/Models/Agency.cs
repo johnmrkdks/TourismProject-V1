@@ -21,6 +21,11 @@ namespace TourismProject.Models
 
         public string ImageUrl { get; set; }
 
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+        [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters")]
+        [Display(Name = "Email Address")]
+        public string Email { get; set; }
         public virtual ICollection<TourPackage> TourPackages { get; set; }
     }
 }
